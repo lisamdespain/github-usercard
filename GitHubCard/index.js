@@ -95,10 +95,10 @@ function createProfileCard(obj){
 
   const userProfileUrl = document.createElement('p');
   const userProfileLink = document.createElement('a');
-  userProfileLink.textContent = obj.html_url;
+  userProfileLink.textContent = obj.html_url
   userProfileLink.href = obj.html_url;
-  userProfileUrl.textContent = 'Profile: ' + userProfileLink;
-  
+  userProfileUrl.textContent = `Profile: `;
+  userProfileUrl.appendChild(userProfileLink);
   cardInfoDiv.appendChild(userProfileUrl);
 
   const userFollowers = document.createElement('p');
