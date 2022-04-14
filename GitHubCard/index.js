@@ -38,7 +38,14 @@ console.log("DONE!")
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+    'tetondan',
+    'dustinmyers',
+    'justsml',
+    'luishrd',
+    'bigknell'
+];
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -83,14 +90,15 @@ function createProfileCard(obj){
   cardInfoDiv.appendChild(userNameShort);
 
   const userLocation = document.createElement('p');
-  userLocation.textContent = obj.location;
+  userLocation.textContent = `Location: ${obj.location}`;
   cardInfoDiv.appendChild(userLocation);
 
   const userProfileUrl = document.createElement('p');
   const userProfileLink = document.createElement('a');
-  userProfileUrl.appendChild(userProfileLink);
   userProfileLink.textContent = obj.html_url;
   userProfileLink.href = obj.html_url;
+  userProfileUrl.textContent = 'Profile: ' + userProfileLink;
+  
   cardInfoDiv.appendChild(userProfileUrl);
 
   const userFollowers = document.createElement('p');
@@ -102,7 +110,7 @@ function createProfileCard(obj){
   cardInfoDiv.appendChild(userFollowing);
 
   const userBio = document.createElement('p');
-  userBio.textContent = obj.bio;
+  userBio.textContent = `Bio: ${obj.bio}`;
   cardInfoDiv.appendChild(userBio);
 }
 /*
@@ -113,3 +121,15 @@ function createProfileCard(obj){
     luishrd
     bigknell
 */
+followersArray.forEach(person =>{
+  axios.get(`https://api.github.com/users/${person}`)
+.then((res) => {
+  createProfileCard(res.data);
+})
+.catch((err) =>{
+  console.log(err);
+})
+.finally(() =>{
+console.log("DONE!")
+})
+})
