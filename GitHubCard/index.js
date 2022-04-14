@@ -1,9 +1,19 @@
+import axios from "axios";
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get(`https://api.github.com/users/lisamdespain`)
+.then((res) => {
+  createProfileCard(res.data);
+})
+.catch((err) =>{
+  console.log(err);
+})
+.finally(() =>{
+console.log("DONE!")
+})
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -49,7 +59,52 @@ const followersArray = [];
       </div>
     </div>
 */
+function createProfileCard(obj){
+  const profileCardDiv = document.createElement('div');
+  profileCardDiv.classList.add('card');
+  document.querySelector('.cards').appendChild(profileCardDiv);
+  
+  const bioPic = document.createElement('img');
+  bioPic.src = obj.avatar_url;
+  profileCardDiv.appendChild(bioPic);
+  
+  const cardInfoDiv = document.createElement('div');
+  cardInfoDiv.classList.add('card-info');
+  profileCardDiv.appendChild(cardInfoDiv);
 
+  const userName = document.createElement('h3');
+  userName.classList.add('name');
+  userName.textContent = obj.name;
+  cardInfoDiv.appendChild(userName);
+
+  const userNameShort = document.createElement('p');
+  userNameShort.classList.add('username');
+  userNameShort.textContent = obj.login;
+  cardInfoDiv.appendChild(userNameShort);
+
+  const userLocation = document.createElement('p');
+  userLocation.textContent = obj.location;
+  cardInfoDiv.appendChild(userLocation);
+
+  const userProfileUrl = document.createElement('p');
+  const userProfileLink = document.createElement('a');
+  userProfileUrl.appendChild(userProfileLink);
+  userProfileLink.textContent = obj.html_url;
+  userProfileLink.href = obj.html_url;
+  cardInfoDiv.appendChild(userProfileUrl);
+
+  const userFollowers = document.createElement('p');
+  userFollowers.textContent = `Followers: ${obj.followers}`;
+  cardInfoDiv.appendChild(userFollowers);
+
+  const userFollowing = document.createElement('p');
+  userFollowing.textContent = `Following: ${obj.following}`;
+  cardInfoDiv.appendChild(userFollowing);
+
+  const userBio = document.createElement('p');
+  userBio.textContent = obj.bio;
+  cardInfoDiv.appendChild(userBio);
+}
 /*
   List of LS Instructors Github username's:
     tetondan
